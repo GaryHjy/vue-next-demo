@@ -33,8 +33,9 @@ export default {
         renderContent(
           props.operationButtons.map(item =>
             h(
-              "button",
+              "a",
               {
+                class: "operation__button",
                 onclick: () => {
                   item.onClick && item.onClick(data);
                 }
@@ -114,6 +115,16 @@ export default {
     line-height: 23px;
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .operation__button {
+    color: #409eff;
+    margin-right: 10px;
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   &__header {

@@ -12,6 +12,12 @@ const routes = [
     name: "Basic",
     component: () =>
       import(/* webpackChunkName: "basic" */ "../views/Basic.vue")
+  },
+  {
+    path: "/todo-list",
+    name: "TodoList",
+    component: () =>
+      import(/* webpackChunkName: "todo-list" */ "../views/TodoList.vue")
   }
 ];
 

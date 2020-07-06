@@ -1,5 +1,5 @@
 <script>
-import { h } from "vue";
+import { h, computed } from "vue";
 
 export default {
   name: "AyTable",
@@ -11,9 +11,40 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    operationButtons: {
+      type: Array,
+      default: () => []
     }
   },
   setup(props) {
+    const isOperation = computed(() => !!props.operationButtons.length);
+
+    const columns = isOperation.value
+      ? props.columns.concat({
+          prop: "operation",
+          label: "操作"
+        })
+      : props.columns;
+
+    const renderOperation = data =>
+      h(
+        "td",
+        renderContent(
+          props.operationButtons.map(item =>
+            h(
+              "button",
+              {
+                onclick: () => {
+                  item.onClick && item.onClick(data);
+                }
+              },
+              item.text
+            )
+          )
+        )
+      );
+
     const renderContent = val =>
       h(
         "div",
@@ -31,7 +62,7 @@ export default {
         },
         h(
           "tr",
-          props.columns.map(column => h("th", renderContent(column.label)))
+          columns.map(column => h("th", renderContent(column.label)))
         )
       );
 
@@ -47,9 +78,9 @@ export default {
             {
               class: "ay-table__row"
             },
-            props.columns.map(column =>
-              h("td", renderContent(item[column.prop]))
-            )
+            props.columns
+              .map(column => h("td", renderContent(item[column.prop])))
+              .concat(renderOperation(item))
           )
         )
       );

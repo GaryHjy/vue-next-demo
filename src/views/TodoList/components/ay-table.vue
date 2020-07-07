@@ -36,7 +36,7 @@ export default {
               "a",
               {
                 class: "operation__button",
-                onclick: () => {
+                onClick: () => {
                   item.onClick && item.onClick(row, index);
                 }
               },
@@ -86,13 +86,24 @@ export default {
         )
       );
 
+    const renderEmptyText = () => h("div", { class: "empty-text" }, "暂无数据");
+
     return () =>
       h(
-        "table",
+        "div",
         {
           class: "ay-table"
         },
-        [renderHeader(), renderBody()]
+        [
+          h(
+            "table",
+            {
+              class: "ay-table__inner"
+            },
+            [renderHeader(), renderBody()]
+          ),
+          !props.data.length && renderEmptyText()
+        ].filter(Boolean)
       );
   }
 };
@@ -102,9 +113,12 @@ export default {
 <style lang="scss">
 .ay-table {
   width: 100%;
-  box-sizing: border-box;
   font-size: 14px;
   color: #606266;
+  &__inner {
+    width: 100%;
+    box-sizing: border-box;
+  }
 
   .cell {
     box-sizing: border-box;
@@ -170,6 +184,15 @@ export default {
       border-bottom: 1px solid #ebeef5;
       transition: background-color 0.25s ease;
     }
+  }
+  .empty-text {
+    min-height: 60px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ebeef5;
   }
 }
 </style>

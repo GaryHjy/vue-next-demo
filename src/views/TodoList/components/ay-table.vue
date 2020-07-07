@@ -27,7 +27,7 @@ export default {
         })
       : props.columns;
 
-    const renderOperation = data =>
+    const renderOperation = (row, index) =>
       h(
         "td",
         renderContent(
@@ -37,7 +37,7 @@ export default {
               {
                 class: "operation__button",
                 onclick: () => {
-                  item.onClick && item.onClick(data);
+                  item.onClick && item.onClick(row, index);
                 }
               },
               item.text
@@ -73,7 +73,7 @@ export default {
         {
           class: "ay-table__body"
         },
-        props.data.map(item =>
+        props.data.map((item, index) =>
           h(
             "tr",
             {
@@ -81,7 +81,7 @@ export default {
             },
             props.columns
               .map(column => h("td", renderContent(item[column.prop])))
-              .concat(renderOperation(item))
+              .concat(renderOperation(item, index))
           )
         )
       );

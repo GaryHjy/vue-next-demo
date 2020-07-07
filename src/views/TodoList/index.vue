@@ -14,6 +14,11 @@ import { ref } from "vue";
 import AyTable from "./components/ay-table";
 import AddForm from "./components/add-form";
 
+const STATUS = {
+  0: "未完成",
+  1: "已完成"
+}
+
 export default {
   components: {
     AyTable,
@@ -28,7 +33,8 @@ export default {
       },
       {
         prop: "status",
-        label: "状态"
+        label: "状态",
+        formatter: row => STATUS[row.status]
       }
     ]);
     const data = ref([]);

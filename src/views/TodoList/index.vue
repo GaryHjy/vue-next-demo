@@ -1,6 +1,6 @@
 <template>
   <div class="todo-list">
-    <button>添加</button>
+    <add-form @add="handleAdd" ref="addForm" />
     <ay-table
       :columns="columns"
       :data="data"
@@ -12,28 +12,27 @@
 <script>
 import { ref } from "vue";
 import AyTable from "./components/ay-table";
+import AddForm from "./components/add-form";
 
 export default {
   components: {
-    AyTable
+    AyTable,
+    AddForm
   },
   setup() {
+    const addForm = ref(null);
     const columns = ref([
       {
         prop: "content",
         label: "内容"
       }
     ]);
-    const data = ref([
-      {
-        content: "hhhhhhhhhhhh"
-      }
-    ]);
+    const data = ref([]);
     const operationButtons = ref([
       {
         text: "完成",
-        onClick: row => {
-          console.log(row.content);
+        onClick: (row, index) => {
+          console.log(index);
         }
       },
       {
@@ -47,10 +46,17 @@ export default {
       }
     ]);
 
+    const handleAdd = value => {
+      data.value.unshift({ content: value });
+      addForm.value.resetTextValue();
+    };
+
     return {
       columns,
       data,
-      operationButtons
+      operationButtons,
+      addForm,
+      handleAdd
     };
   }
 };

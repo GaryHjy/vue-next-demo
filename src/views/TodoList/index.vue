@@ -25,14 +25,18 @@ export default {
       {
         prop: "content",
         label: "内容"
+      },
+      {
+        prop: "status",
+        label: "状态"
       }
     ]);
     const data = ref([]);
     const operationButtons = ref([
       {
         text: "完成",
-        onClick: (row, index) => {
-          console.log(index);
+        onClick: (_, index) => {
+          data.value[index].status = 1;
         }
       },
       {
@@ -40,14 +44,15 @@ export default {
         style: {
           color: "red"
         },
-        onClick: row => {
-          console.log(row.content);
+        onClick: (_, index) => {
+          data.value.splice(index, 1);
         }
       }
     ]);
 
     const handleAdd = value => {
-      data.value.unshift({ content: value });
+      if (!value) return;
+      data.value.unshift({ content: value, status: 0 });
       addForm.value.resetTextValue();
     };
 

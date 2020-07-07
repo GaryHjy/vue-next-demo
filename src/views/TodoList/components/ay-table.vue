@@ -80,7 +80,16 @@ export default {
               class: "ay-table__row"
             },
             props.columns
-              .map(column => h("td", renderContent(item[column.prop])))
+              .map(column =>
+                h(
+                  "td",
+                  renderContent(
+                    column.formatter
+                      ? column.formatter(item, index)
+                      : item[column.prop]
+                  )
+                )
+              )
               .concat(renderOperation(item, index))
           )
         )

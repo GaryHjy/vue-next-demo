@@ -1,9 +1,16 @@
 <template>
   <div class="add-form">
     <div class="add-form-input">
-      <input class="add-form-input__inner" type="text" v-model="value" />
+      <input
+        class="add-form-input__inner"
+        type="text"
+        v-model="text"
+        placeholder="请输入"
+      />
     </div>
-    <button class="add-form__button">添加</button>
+    <button class="add-form__button" @click="$emit('add', text)">
+      添加
+    </button>
   </div>
 </template>
 
@@ -13,10 +20,15 @@ import { ref } from "vue";
 export default {
   name: "AddForm",
   setup() {
-    const value = ref("");
+    const text = ref("");
+
+    const resetTextValue = () => {
+      text.value = "";
+    };
 
     return {
-      value
+      text,
+      resetTextValue
     };
   }
 };

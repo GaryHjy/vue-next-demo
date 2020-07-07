@@ -6,6 +6,7 @@
         type="text"
         v-model="text"
         placeholder="请输入"
+        @keyup.enter="$emit('add', text)"
       />
     </div>
     <button class="add-form__button" @click="$emit('add', text)">

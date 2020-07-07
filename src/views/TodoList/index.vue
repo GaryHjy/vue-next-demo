@@ -17,7 +17,7 @@ import AddForm from "./components/add-form";
 const STATUS = {
   0: "未完成",
   1: "已完成"
-}
+};
 
 export default {
   components: {
